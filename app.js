@@ -9,6 +9,17 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static('public'));
 
+mongoose.connect('mongodb://localhost:27017/ReminderAppDB');
+
+const remindersSchema = {
+    title: String,
+    body: String
+};
+
+const Reminder = mongoose.model("Reminder", remindersSchema);
+
+
+
 app.listen(8000, function() {
     console.log('Server started on port 8000');
 });
