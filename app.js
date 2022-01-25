@@ -18,7 +18,29 @@ const remindersSchema = {
 
 const Reminder = mongoose.model("Reminder", remindersSchema);
 
+app.get('/', function(req, res) {
+    Reminder.find(function(err, foundReminders) {
+        if(!err) {
+            res.send(foundReminders);
+        } else {
+            console.log(err);
+        }
+    });
+});
 
+app.post('/', function(req, res) {
+    const newReminder = new Reminder({
+        title: req.body.title,
+        body: req.body.body
+    });
+    newReminder.save(function(err) {
+        if(!err){
+            res.send('Successfully added a new reminder');
+        } else {
+            res.send(err);
+        }
+    });
+});
 
 app.listen(8000, function() {
     console.log('Server started on port 8000');
